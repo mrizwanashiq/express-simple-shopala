@@ -9,6 +9,6 @@ router.get("/", controllers.getAll);
 router.get("/:id?", validate(authValidation.id), controllers.getById);
 router.post("/", validate(authValidation.add), controllers.post);
 router.patch("/:id?", validate(authValidation.update), controllers.update);
-router.delete("/id?", validate(authValidation.id), controllers.delete);
+router.delete("/:id?", validate(authValidation.id), controllers.delete);
 
 export default router;

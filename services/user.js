@@ -4,6 +4,7 @@ import ProductModel from "../models/product.js";
 const UserService = {
   getAll: async () => {
     try {
+      // I am using aggregate because I want to get all the users and their products' length. 
       const data = await UserModel.aggregate([
         { $match: { is_active: true } },
         { $project: { password: 0 } },
@@ -57,8 +58,7 @@ const UserService = {
 
   getByEmail: async (email) => {
     try {
-      const query = { email: email };
-      const data = await UserModel.find(query);
+      const data = await UserModel.find({ email: email });
 
       if (data) {
         return { message: "success", data: data };
@@ -68,13 +68,45 @@ const UserService = {
     }
   },
 
+  login: async (body) => {
+    try {
+      const data = await UserModel.find({ email: body.email });
+
+      if (data.message === "error" || data.data.length < 1) {
+        return { message: "error", data: "Email is wrong" };
+      }
+
+      const isVerified = passwordHash.verify(
+        req.body.password,
+        data.data[0].password
+      );
+
+      if (!isVerified) {
+        return { message: "error", data: "Password is wrong" };
+      }
+
+      delete data.data[0].password;
+      const token = await jwt.sign(data.data[0]._doc, "my_temporary_secret");
+      if (token) {
+        return { message: "success", data: token };
+      } else {
+        return { message: "error", data: "Token is not generated" };
+      }
+    } catch (error) {
+      return { message: "error", data: error.message };
+    }
+  },
+
   add: async (body) => {
     try {
-      const query = { email: body.email };
-      const data = await UserModel.find(query);
-      if (data.length > 0) {
+      const data = await UserModel.findOne({ email: body.email });
+      if (data) {
         return { message: "failed", data: "User already exist" };
       }
+
+      const hashedPassword = passwordHash.generate(req.body.password);
+      req.body.password = hashedPassword;
+      req.body.role = 'vendor';
 
       const savedData = await UserModel.create(body);
       if (savedData) {
@@ -113,6 +145,8 @@ const UserService = {
 
         return { message: "success", data: data };
       }
+    } else {
+      return { message: "error", data: "User not found" };
     }
   },
 
