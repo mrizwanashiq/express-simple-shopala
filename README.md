@@ -4,11 +4,21 @@ It is express payment checkout api.
 # Run Project
 ### 1. Clone the project
 
+### 2. Install packages
+```shell
+yarn
+```
+
 ### 2. Run the project
 ```shell
-npm i
-npm start
+yarn run start
 ```
+or 
+
+```shell
+yarn run dev
+```
+
 then you can open swagger docs at url http://localhost:2022/api-docs/
 
 ### 3. Run the project
