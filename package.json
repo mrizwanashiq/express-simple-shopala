@@ -20,7 +20,6 @@
     "joi": "^17.5.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.0.13",
-    "passport": "^0.6.0",
     "password-hash": "^1.2.2"
   },
   "devDependencies": {
