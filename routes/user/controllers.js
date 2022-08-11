@@ -1,6 +1,4 @@
 import UserService from "../../services/user.js";
-import passwordHash from "password-hash";
-import jwt from "jsonwebtoken";
 import httpResponse from "../../utils/httpResponse.js";
 
 const controller = {
@@ -34,7 +32,7 @@ const controller = {
   },
 
   login: async (req, res) => {
-    const data = await UserService.getByEmail(req.body.email);
+    const data = await UserService.login(req.body.email);
     if (data.message === "success") {
       return httpResponse.SUCCESS(res, data.data, data.data);
     } else {

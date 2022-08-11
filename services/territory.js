@@ -18,7 +18,7 @@ const territoryService = {
     try {
       const data = await TerritoryModel.findById(id);
       if (data) {
-        return { message: "success", data: data };
+        return { message: "success", data };
       }
     } catch (error) {
       return { message: "error", data: error.message };
@@ -62,7 +62,7 @@ const territoryService = {
       const data = await TerritoryModel.findByIdAndRemove(id);
 
       if (data) {
-        return { message: "success", data: data };
+        return { message: "success", data };
       }
     } catch (error) {
       return { message: "error", data: error.message };

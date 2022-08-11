@@ -8,7 +8,7 @@ const productService = {
         .populate("user_id", "email first_name last_name role image");
 
       if (data) {
-        return { message: "success", data: data };
+        return { message: "success", data };
       }
     } catch (error) {
       return { message: "error", data: error.message };
@@ -21,7 +21,7 @@ const productService = {
         .find(query)
         .populate("user_id", "email first_name last_name role image");
       if (data) {
-        return { message: "success", data: data };
+        return { message: "success", data };
       }
     } catch (error) {
       return { message: "error", data: error.message };
@@ -44,7 +44,7 @@ const productService = {
       // .find({ name: { $regex: ".*" + body.id + ".*", $options: "i" } })
       // .populate("user_id", "email first_name last_name role image");
       if (data) {
-        return { message: "success", data: data };
+        return { message: "success", data };
       }
     } catch (error) {
       return { message: "error", data: error.message };
@@ -57,7 +57,7 @@ const productService = {
         .find(query)
         .populate("user_id", "email first_name last_name role image");
       if (data) {
-        return { message: "success", data: data };
+        return { message: "success", data };
       }
     } catch (error) {
       throw error;
@@ -69,7 +69,7 @@ const productService = {
         .findById(body)
         .populate("user_id", "email first_name last_name");
       if (data) {
-        return { message: "success", data: data };
+        return { message: "success", data };
       }
     } catch (error) {
       return { message: "error", data: error.message };

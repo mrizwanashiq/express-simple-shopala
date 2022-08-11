@@ -5,7 +5,7 @@ const languageService = {
     try {
       const data = await LanguageModel.find();
       if (data) {
-        return { message: "success", data: data };
+        return { message: "success", data };
       }
     } catch (error) {
       return { message: "error", data: error.message };
@@ -17,7 +17,7 @@ const languageService = {
       const data = await LanguageModel.findById(id);
 
       if (data) {
-        return { message: "success", data: data };
+        return { message: "success", data };
       }
     } catch (error) {
       return { message: "error", data: error.message };
@@ -45,7 +45,7 @@ const languageService = {
             name: body.name,
             code: body.code,
           },
-        
+
         },
         { runValidators: true }
       );
@@ -62,7 +62,7 @@ const languageService = {
       const data = await LanguageModel.findByIdAndRemove(id);
 
       if (data) {
-        return { message: "success", data: data };
+        return { message: "success", data };
       }
     } catch (error) {
       return { message: "error", data: error.message };

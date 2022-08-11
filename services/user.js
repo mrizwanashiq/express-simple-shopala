@@ -49,7 +49,7 @@ const UserService = {
       const data = await UserModel.findById(id).select({ password: 0 });
 
       if (data) {
-        return { message: "success", data: data };
+        return { message: "success", data };
       }
     } catch (error) {
       return { message: "error", data: error.message };
@@ -61,24 +61,24 @@ const UserService = {
       const data = await UserModel.find({ email: email });
 
       if (data) {
-        return { message: "success", data: data };
+        return { message: "success", data };
       }
     } catch (error) {
       return { message: "error", data: error.message };
     }
   },
 
-  login: async (body) => {
+  login: async ({ email, password }) => {
     try {
-      const data = await UserModel.find({ email: body.email });
+      const data = await UserModel.findOne({ email });
 
-      if (data.message === "error" || data.data.length < 1) {
+      if (!data) {
         return { message: "error", data: "Email is wrong" };
       }
 
       const isVerified = passwordHash.verify(
-        req.body.password,
-        data.data[0].password
+        password,
+        data.data.password
       );
 
       if (!isVerified) {
@@ -121,13 +121,13 @@ const UserService = {
     try {
       const id = body.id;
       delete body.id;
-      const updateDate = await UserModel.updateOne(
+      const data = await UserModel.updateOne(
         { _id: id },
         { $set: body },
         { runValidators: true }
       );
-      if (updateDate) {
-        return { message: "success", data: updateDate };
+      if (data) {
+        return { message: "success", data };
       }
     } catch (error) {
       return { message: "error", data: error.message };
@@ -143,7 +143,7 @@ const UserService = {
       if (deactivateUser) {
         await ProductModel.updateMany({ user_id: id }, { is_active: false });
 
-        return { message: "success", data: data };
+        return { message: "success", data };
       }
     } else {
       return { message: "error", data: "User not found" };
@@ -155,7 +155,7 @@ const UserService = {
     try {
       const data = await UserModel.findOne({ _id: req.user.user._id });
       if (data) {
-        return { message: "success", data: data };
+        return { message: "success", data };
       }
     } catch (error) {
       throw error;
