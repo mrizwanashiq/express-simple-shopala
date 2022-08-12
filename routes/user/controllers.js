@@ -13,7 +13,7 @@ const controller = {
 
   getById: async (req, res) => {
     try {
-      const data = await UserService.getById(req.params.id);
+      const data = await UserService.getById(req.user._id);
       return httpResponse.SUCCESS(res, data.data);
     } catch (error) {
       return httpResponse.INTERNAL_SERVER_ERROR(res, error);
@@ -32,7 +32,7 @@ const controller = {
   },
 
   login: async (req, res) => {
-    const data = await UserService.login(req.body.email);
+    const data = await UserService.login(req.body);
     if (data.message === "success") {
       return httpResponse.SUCCESS(res, data.data, data.data);
     } else {
