@@ -1,5 +1,7 @@
 import UserModel from "../models/user.js";
 import ProductModel from "../models/product.js";
+import passwordHash from "password-hash";
+import jwt from "jsonwebtoken";
 
 const UserService = {
   getAll: async () => {
@@ -78,17 +80,17 @@ const UserService = {
 
       const isVerified = passwordHash.verify(
         password,
-        data.data.password
+        data.password
       );
 
       if (!isVerified) {
         return { message: "error", data: "Password is wrong" };
       }
 
-      delete data.data[0].password;
-      const token = await jwt.sign(data.data[0]._doc, "my_temporary_secret");
+      delete data._doc.password;
+      const token = await jwt.sign(data._doc, "my_temporary_secret");
       if (token) {
-        return { message: "success", data: token };
+        return { message: "success", data: { token } };
       } else {
         return { message: "error", data: "Token is not generated" };
       }
@@ -104,9 +106,9 @@ const UserService = {
         return { message: "failed", data: "User already exist" };
       }
 
-      const hashedPassword = passwordHash.generate(req.body.password);
-      req.body.password = hashedPassword;
-      req.body.role = 'vendor';
+      const hashedPassword = passwordHash.generate(body.password);
+      body.password = hashedPassword;
+      body.role = 'vendor';
 
       const savedData = await UserModel.create(body);
       if (savedData) {
