@@ -5,11 +5,13 @@ It is express payment checkout api.
 ### 1. Clone the project
 
 ### 2. Install packages
+
 ```shell
 yarn
 ```
 
 ### 2. Run the project
+
 ```shell
 yarn run start
 ```
@@ -19,7 +21,7 @@ or
 yarn run dev
 ```
 
-then you can open swagger docs at url http://localhost:2022/api-docs/
+Then you can open swagger docs at url http://localhost:2022/api-docs/
 
 ### 3. Run the project
 You have to register from user api then login and swagger will produce jwt token which will be used for authorization
