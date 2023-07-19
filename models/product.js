@@ -12,6 +12,6 @@ const schema = Schema({
   image: { type: String, required: false, maxlength: 500 },
   brand_logo: { type: String, maxlength: 500 },
   is_active: { type: Boolean, default: true },
-  
 });
+
 export default mongoose.model("Product", schema);
