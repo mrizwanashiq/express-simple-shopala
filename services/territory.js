@@ -1,7 +1,5 @@
 import TerritoryModel from "../models/territory.js";
 
-
-
 const territoryService = {
   getAll: async () => {
     try {
