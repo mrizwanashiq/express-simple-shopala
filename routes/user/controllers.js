@@ -1,11 +1,13 @@
 import UserService from "../../services/user.js";
-import httpResponse from "../../utils/httpResponse.js";
+import {ResponseSchema} from "../../utils/httpResponse.js"
+
+import {Codes} from "../../constants/codes.js"
 
 const controller = {
   getAll: async (req, res) => {
     try {
       const data = await UserService.getAll();
-      return httpResponse.SUCCESS(res, data.data);
+      return ResponseSchema({res, data, ...Codes.SUCCESS});
     } catch (error) {
       return httpResponse.INTERNAL_SERVER_ERROR(res, error);
     }
@@ -22,13 +24,9 @@ const controller = {
 
   register: async (req, res) => {
     const addResponse = await UserService.add(req.body);
-    if (addResponse.message === "success") {
-      return httpResponse.CREATED(res, addResponse.data);
-    } else if (addResponse.message === "failed") {
-      return httpResponse.CONFLICT(res, addResponse.data);
-    } else {
-      return httpResponse.INTERNAL_SERVER(res, addResponse.data);
-    }
+
+
+    
   },
 
   login: async (req, res) => {
