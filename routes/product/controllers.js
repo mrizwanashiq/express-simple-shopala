@@ -24,6 +24,11 @@ const controller = {
 
   post: async (req, res) => {
     req.body.user_id = req.user._id
+    if (req.files) {
+      // assign url to req.body.image and req.body.brand_logo
+      req.body.image = `${req.protocol}://${req.get("host")}/${req.files.image[0].filename}`
+      req.body.brand_logo = `${req.protocol}://${req.get("host")}/${req.files.brand_logo[0].filename}`
+    }
     const data = await ProductService.add(req.body)
 
     if (data.message === "success") {
